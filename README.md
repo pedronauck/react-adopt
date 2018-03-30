@@ -14,7 +14,7 @@
 
 React Adopt it's just a simple method that you can compose your components and return all props in a function by mapping each child prop returned by your component.
 
-## 💻 &nbsp; Usage
+## 💻 &nbsp; Usage ([demo](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1))
 
 Install as project dependency:
 
