@@ -54,6 +54,52 @@ test('rendering children component', () => {
   expect(result.html()).toBe('<div>foobar</div>')
 })
 
+test('should allow a function as mapper', () => {
+  const Foo = ({ children }) => children('foo')
+  const foo = jest.fn(() => <Foo />)
+  const children = jest.fn(() => null)
+  const Composed = adopt({ foo })
+
+  mount(<Composed>{children}</Composed>)
+
+  expect(foo).toHaveBeenCalled()
+  expect(children).toHaveBeenCalledWith({ foo: 'foo' })
+})
+
+test('should provide a function mapper with all previous render prop results', () => {
+  const Foo = ({ children }) => children('foo')
+  const Bar = ({ children }) => children('bar')
+  const bar = jest.fn(() => <Bar />)
+  const children = jest.fn(() => null)
+
+  interface RenderProps {
+    foo: 'foo'
+    bar: 'bar'
+  }
+
+  const Composed = adopt<RenderProps>({
+    foo: <Foo />,
+    bar,
+  })
+
+  mount(<Composed>{children}</Composed>)
+
+  expect(bar.mock.calls[0][0]).toHaveProperty('foo', 'foo')
+  expect(children).toHaveBeenCalledWith({ foo: 'foo', bar: 'bar' })
+})
+
+test('should provide mapper functions with Composed component props', () => {
+  const Foo = ({ children }) => children('foo')
+  const foo = jest.fn(() => <Foo />)
+  const children = jest.fn(() => null)
+  const Composed = adopt({ foo })
+
+  mount(<Composed bar='bar'>{children}</Composed>)
+
+  expect(foo).toHaveBeenCalledWith({ bar: 'bar' })
+  expect(children).toHaveBeenCalledWith({ foo: 'foo' })
+})
+
 test('throw with a wrong value on mapper', () => {
   expect(() => {
     const Composed = adopt({ foo: 'helo' })
