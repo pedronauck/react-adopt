@@ -27,9 +27,8 @@ export function adopt<RP extends Record<string, any>>(
     (Component: RPC<RP>, key: keyof RP): RPC<RP> => ({ children, ...rest }) => (
       <Component>
         {props => {
-          const renderProp = (childProps: any) => children(
-            Object.assign({}, props, { [key]: childProps })
-          )
+          const renderProp = (childProps: any) =>
+            children(Object.assign({}, props, { [key]: childProps }))
 
           return typeof mapper[key] === 'function'
             ? mapper[key](Object.assign({}, rest, props, { renderProp }))
