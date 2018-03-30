@@ -56,7 +56,7 @@ test('rendering children component', () => {
 
 test('should allow a function as mapper', () => {
   const Foo = ({ children }) => children('foo')
-  const foo = jest.fn(() => <Foo />)
+  const foo = jest.fn(({ renderProp }) => <Foo children={ renderProp } />)
   const children = jest.fn(() => null)
   const Composed = adopt({ foo })
 
@@ -69,7 +69,7 @@ test('should allow a function as mapper', () => {
 test('should provide a function mapper with all previous render prop results', () => {
   const Foo = ({ children }) => children('foo')
   const Bar = ({ children }) => children('bar')
-  const bar = jest.fn(() => <Bar />)
+  const bar = jest.fn(({ renderProp }) => <Bar children={ renderProp } />)
   const children = jest.fn(() => null)
 
   interface RenderProps {
@@ -90,13 +90,13 @@ test('should provide a function mapper with all previous render prop results', (
 
 test('should provide mapper functions with Composed component props', () => {
   const Foo = ({ children }) => children('foo')
-  const foo = jest.fn(() => <Foo />)
+  const foo = jest.fn(({ renderProp }) => <Foo children={ renderProp } />)
   const children = jest.fn(() => null)
   const Composed = adopt({ foo })
 
   mount(<Composed bar="bar">{children}</Composed>)
 
-  expect(foo).toHaveBeenCalledWith({ bar: 'bar' })
+  expect(foo.mock.calls[0][0]).toHaveProperty('bar', 'bar')
   expect(children).toHaveBeenCalledWith({ foo: 'foo' })
 })
 
