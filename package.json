@@ -1,0 +1,62 @@
+{
+  "name": "react-adopt",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.m.js",
+  "source": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "dev": "libundler watch --ts",
+    "build": "libundler build --ts --sourcemap",
+    "build:prod": "yarn build --compress",
+    "prebuild:prod": "yarn run fix",
+    "test": "jest",
+    "fix": "run-s fix:*",
+    "fix:prettier": "prettier \"src/**/*.{ts,tsx}\" --write",
+    "fix:tslint": "tslint --fix --project .",
+    "release": "np",
+    "prerelease": "yarn build:prod"
+  },
+  "dependencies": {
+    "react": "^16.3.0"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.1.9",
+    "@types/enzyme-adapter-react-16": "^1.0.2",
+    "@types/jest": "^22.2.2",
+    "@types/react": "^16.1.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.3",
+    "libundler": "^1.5.1",
+    "np": "^2.20.1",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.11.1",
+    "react-dom": "^16.3.0",
+    "ts-jest": "^22.4.2",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.8.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/utils/test-setup.ts"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js?|jsx?|jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}
