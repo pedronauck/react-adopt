@@ -26,17 +26,20 @@ export function adopt<RP extends Record<string, any>>(
   return Object.keys(mapper).reduce(
     (Component: RPC<RP>, key: keyof RP): RPC<RP> => ({ children, ...rest }) => (
       <Component>
-        {props => React.cloneElement(
-          typeof mapper[key] === 'function'
-            ? mapper[key]({ ...rest, ...props })
-            : mapper[key],
-          {
-            children: (childProps: any) => children({
-              ...props,
-              [key]: childProps
-            }),
-          }
-        )}
+        {props =>
+          React.cloneElement(
+            typeof mapper[key] === 'function'
+              ? mapper[key]({ ...rest, ...props })
+              : mapper[key],
+            {
+              children: (childProps: any) =>
+                children({
+                  ...props,
+                  [key]: childProps,
+                }),
+            }
+          )
+        }
       </Component>
     ),
     Children

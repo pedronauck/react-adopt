@@ -94,7 +94,7 @@ test('should provide mapper functions with Composed component props', () => {
   const children = jest.fn(() => null)
   const Composed = adopt({ foo })
 
-  mount(<Composed bar='bar'>{children}</Composed>)
+  mount(<Composed bar="bar">{children}</Composed>)
 
   expect(foo).toHaveBeenCalledWith({ bar: 'bar' })
   expect(children).toHaveBeenCalledWith({ foo: 'foo' })
