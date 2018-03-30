@@ -2,7 +2,6 @@
 
 [![GitHub release](https://img.shields.io/github/release/pedronauck/react-adopt.svg)]()
 [![Build Status](https://travis-ci.org/pedronauck/react-adopt.svg?branch=master)](https://travis-ci.org/pedronauck/react-adopt)
-[![Coveralls](https://img.shields.io/coveralls/pedronauck/react-adopt.svg)]()
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ebdcc3e942b14363a96438b41c770b32)](https://www.codacy.com/app/pedronauck/react-adopt?utm_source=github.com&utm_medium=referral&utm_content=pedronauck/react-adopt&utm_campaign=Badge_Grade)
 
 ![](https://i.imgflip.com/27euu2.jpg)
