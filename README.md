@@ -25,27 +25,22 @@ Install as project dependency:
 $ yarn add react-adopt
 ```
 
-Then you can use the method to compose your components
+Then you can use the method to compose your components. See above an example using the awesome library [react-powerplug](https://github.com/renatorib/react-powerplug):
 
 ```js
 import React from 'react'
-import { render } from 'react-dom'
 import { adopt } from 'react-adopt'
-
-import { Filter } from './my-awesome-filter-component'
+import { Value } from 'react-powerplug'
 
 const Composed = adopt({
-  kids: <Filter list={people} by={p => p.age < 18} />,
-  adults: <Filter list={people} by={p => p.age >= 18} />
+  greet: <Value initial="Hello" />,
+  name: <Value initial="John" />,
 })
 
 const App = () => (
   <Composed>
-    {({ kids, adults }) => (
-      <div>
-        <ul>{kids.map(p => <li>{p.name}</li>)}</ul>
-        <ul>{adults.map(p => <li>{p.name}</li>)}</ul>
-      </div>
+    {({ greet, name }) => (
+      <div>{greet.value} {name.value}</div>
     )}
   </Composed>
 )
