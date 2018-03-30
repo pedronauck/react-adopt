@@ -10,11 +10,11 @@
     "dev": "libundler watch --ts",
     "build": "libundler build --ts --sourcemap",
     "build:prod": "yarn build --compress",
-    "prebuild:prod": "yarn run fix",
+    "prebuild:prod": "yarn run fix:prettier",
     "test": "jest",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.{ts,tsx}\" --write",
-    "fix:tslint": "tslint --fix --project .",
+    "fix:tslint": "tslint -c tslint.json 'src/index.tsx'",
     "release": "np",
     "prerelease": "yarn build:prod"
   },

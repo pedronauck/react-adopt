@@ -5,13 +5,12 @@
     "ordered-imports": false,
     "object-literal-sort-keys": [true, "ignore-case", "shorthand-first"],
 
-    // TODO: allow devDependencies only in **/*.spec.ts files:
     // waiting on https://github.com/palantir/tslint/pull/3708
     "no-implicit-dependencies": [true, "dev"],
-    "no-duplicate-imports": [false],
-    "prefer-object-spread": [false],
-    "no-console": [false],
-    "no-shadowed-variable": [false],
+    "no-duplicate-imports": false,
+    "prefer-object-spread": false,
+    "no-console": false,
+    "no-shadowed-variable": false,
 
     // Recommended built-in rules
     "no-var-keyword": true,
