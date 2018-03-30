@@ -6,18 +6,24 @@
   "module": "dist/index.m.js",
   "source": "src/index.tsx",
   "license": "MIT",
+  "repository": "git@github.com:pedronauck/pedronauck.git",
+  "author": "Pedro Nauck <pedronauck@gmail.com>",
   "scripts": {
     "dev": "libundler watch --ts",
     "build": "libundler build --ts --sourcemap",
     "build:prod": "yarn build --compress",
     "prebuild:prod": "yarn run fix:prettier",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.{ts,tsx}\" --write",
-    "fix:tslint": "tslint -c tslint.json 'src/index.tsx'",
     "release": "np",
     "prerelease": "yarn build:prod"
   },
+  "keywords": [
+    "react",
+    "render-props",
+    "compose"
+  ],
   "dependencies": {
     "react": "^16.3.0"
   },
@@ -29,15 +35,19 @@
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/jest": "^22.2.2",
     "@types/react": "^16.1.0",
+    "cross-env": "^5.1.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "husky": "^0.14.3",
     "jest": "^22.4.3",
     "libundler": "^1.5.1",
+    "lint-staged": "^7.0.0",
     "np": "^2.20.1",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.11.1",
     "react-dom": "^16.3.0",
     "ts-jest": "^22.4.2",
+    "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.10.0",
     "typescript": "^2.8.1"
@@ -58,5 +68,17 @@
       "json",
       "node"
     ]
+  },
+  "engines": {
+    "node": ">=9.0.0"
+  },
+  "lint-staged": {
+    "src/**.tsx": [
+      "yarn fix:prettier",
+      "git add"
+    ]
+  },
+  "husky": {
+    "pre-commit": "lint-staged && yarn test"
   }
 }
