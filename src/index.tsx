@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { ComponentType, ReactNode, ReactElement } from 'react'
 
-const isAllElementValid = (values: ReactNode[]): boolean =>
-  !values.some(value => !React.isValidElement(value))
-
 export type ChildrenFn<P> = (props: P) => ReactNode
 
 export type RPC<Props> = ComponentType<{
@@ -15,7 +12,7 @@ export type Mapper<R> = Record<keyof R, ReactElement<any> | any>
 export function adopt<RP extends Record<string, any>>(
   mapper: Mapper<RP>
 ): RPC<RP> {
-  if (!isAllElementValid(Object.values(mapper))) {
+  if (!Object.values(mapper).some(React.isValidElement)) {
     throw new Error(
       'The render props object mapper just accept valid elements as value'
     )
