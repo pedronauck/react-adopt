@@ -8,7 +8,9 @@
 
 ## 🧐 &nbsp; Why
 
-[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be borring and generate something like a *"render hell"*.
+[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be borring and generate something called a *"render props callback hell", like that:
+
+![Bad](https://i.imgur.com/qmk3Bk5.png)
 
 ## 💡 &nbsp; Solution
 
@@ -25,26 +27,9 @@ Install as project dependency:
 $ yarn add react-adopt
 ```
 
-Then you can use the method to compose your components. See above an example using the awesome library [react-powerplug](https://github.com/renatorib/react-powerplug):
+Now you can use adopt to compose your components. See above an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
 
-```js
-import React from 'react'
-import { adopt } from 'react-adopt'
-import { Value } from 'react-powerplug'
-
-const Composed = adopt({
-  greet: <Value initial="Hello" />,
-  name: <Value initial="John" />,
-})
-
-const App = () => (
-  <Composed>
-    {({ greet, name }) => (
-      <div>{greet.value} {name.value}</div>
-    )}
-  </Composed>
-)
-```
+![Good](https://i.imgur.com/RXVlFwy.png)
 
 ## 🕺 &nbsp; Contribute
 
