@@ -8,7 +8,7 @@
 
 ## 🧐 &nbsp; Why
 
-[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be borring and generate something called a "render props callback hell", like that:
+[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like that:
 
 ![Bad](https://i.imgur.com/qmk3Bk5.png)
 
@@ -30,6 +30,49 @@ $ yarn add react-adopt
 Now you can use adopt to compose your components. See above an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
 
 ![Good](https://i.imgur.com/RXVlFwy.png)
+
+### Custom render and retrieving props from composed
+
+Some components don't use the `children` property as render props. For cases like that, you can pass a function as mapper value that will return your component. This function will receive as props the `render` method, the props passed on `Composed` component and the previous values from each mapper. See an example:
+
+```js
+import { adopt } from 'react-adopt'
+import MyCustomRenderProps from 'my-custom-render-props'
+
+const Composed = adopt({
+  custom: ({ render }) => <MyCustomRenderProps render={render} />
+})
+
+const App = () => (
+  <Composed>
+    {({ custom }) => (
+      <div>{custom.value}</div>
+    )}
+  </Composed>
+)
+```
+
+And as I said above, you can retrieve the properties passed to the composed component using that way too:
+
+
+```js
+import { adopt } from 'react-adopt'
+import { Value } from 'react-powerplug'
+
+const Composed = adopt({
+  greet: ({ initialGreet, render }) => (
+    <Value initial={initialGreet}>{render}</Value>
+  )
+})
+
+const App = () => (
+  <Composed initialGreet="Hi">
+    {({ greet }) => (
+      <div>{greet.value}</div>
+    )}
+  </Composed>
+)
+```
 
 ## 🕺 &nbsp; Contribute
 
