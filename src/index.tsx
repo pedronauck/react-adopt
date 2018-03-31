@@ -20,8 +20,6 @@ export type RPC<RenderProps, Props = {}> = ComponentType<
   }
 >
 
-const isFn = (val: any): boolean => Boolean(val) && typeof val === 'function'
-
 function omit<R = object>(obj: any, omitProps: string[]): R {
   const newObj = keys(obj)
     .filter((key: string): boolean => omitProps.indexOf(key) === -1)
@@ -32,6 +30,8 @@ function omit<R = object>(obj: any, omitProps: string[]): R {
 
   return newObj as R
 }
+
+const isFn = (val: any): boolean => Boolean(val) && typeof val === 'function'
 
 const isValidRenderProp = (prop: ReactNode | ChildrenFn<any>): boolean =>
   React.isValidElement(prop) || isFn(prop)
