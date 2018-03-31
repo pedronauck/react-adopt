@@ -15,7 +15,7 @@
 ## 💡 &nbsp; Solution
 
 * **Small**. 0.7kb minified!
-* **Extremelly Simple**. Just a method!
+* **Extremely Simple**. Just a method!
 
 React Adopt it's just a simple method that you can compose your components and return all props in a function by mapping each child prop returned by your component.
 
