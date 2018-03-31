@@ -1,4 +1,4 @@
-:sunglasses: _**React Adop -**_ Compose render props components like a pro
+:sunglasses: _**React Adopt -**_ Compose render props components like a pro
 
 [![GitHub release](https://img.shields.io/github/release/pedronauck/react-adopt.svg)]()
 [![Build Status](https://travis-ci.org/pedronauck/react-adopt.svg?branch=master)](https://travis-ci.org/pedronauck/react-adopt)
@@ -8,7 +8,7 @@
 
 ## 🧐 &nbsp; Why
 
-[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be borring and generate something called a *"render props callback hell", like that:
+[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be borring and generate something called a "render props callback hell", like that:
 
 ![Bad](https://i.imgur.com/qmk3Bk5.png)
 
@@ -17,7 +17,7 @@
 * **Small**. 0.7kb minified!
 * **Extremely Simple**. Just a method!
 
-React Adopt it's just a simple method that you can compose your components and return all props in a function by mapping each child prop returned by your component.
+React Adopt is just a simple method that you can compose your components and return all props in a function by mapping each child prop returned by your component.
 
 ## 💻 &nbsp; Usage ([demo](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1))
 
