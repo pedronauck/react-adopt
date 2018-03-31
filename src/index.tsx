@@ -1,41 +1,74 @@
 import * as React from 'react'
 import { ComponentType, ReactNode, ReactElement } from 'react'
 
-export type ChildrenFn<P> = (props: P) => ReactNode
+const { values, keys, assign } = Object
 
-export type RPC<Props> = ComponentType<{
-  children?: ChildrenFn<Props>
-}>
+export type ChildrenFn<P = any> = (props: P) => ReactNode
 
-export type Mapper<R> = Record<keyof R, ReactElement<any> | any>
+export type MapperValue =
+  | ReactElement<any>
+  | ChildrenFn<{
+      renderProp?: ChildrenFn
+      [key: string]: any
+    }>
 
-const isValidRenderProp = (prop: ReactNode | ChildrenFn): boolean =>
-  React.isValidElement(prop) || typeof prop === 'function'
+export type Mapper<R> = Record<keyof R, MapperValue>
 
-const Children = ({ children }: any) => children()
+export type RPC<RenderProps, Props = {}> = ComponentType<
+  Props & {
+    children: ChildrenFn<RenderProps>
+  }
+>
 
-export function adopt<RP extends Record<string, any>>(
+const isFn = (val: any): boolean => Boolean(val) && typeof val === 'function'
+
+function omit<R = object>(obj: any, omitProps: string[]): R {
+  const newObj = keys(obj)
+    .filter((key: string): boolean => omitProps.indexOf(key) === -1)
+    .reduce(
+      (returnObj: any, key: string): R => ({ ...returnObj, [key]: obj[key] }),
+      {}
+    )
+
+  return newObj as R
+}
+
+const isValidRenderProp = (prop: ReactNode | ChildrenFn<any>): boolean =>
+  React.isValidElement(prop) || isFn(prop)
+
+export function adopt<RP extends Record<string, any>, P = {}>(
   mapper: Mapper<RP>
-): RPC<RP> {
-  if (!Object.values(mapper).some(isValidRenderProp)) {
+): RPC<RP, P> {
+  if (!values(mapper).some(isValidRenderProp)) {
     throw new Error(
       'The render props object mapper just accept valid elements as value'
     )
   }
 
-  return Object.keys(mapper).reduce(
-    (Component: RPC<RP>, key: keyof RP): RPC<RP> => ({ children, ...rest }) => (
-      <Component>
-        {props => {
-          const renderProp = (childProps: any) =>
-            children(Object.assign({}, props, { [key]: childProps }))
+  const Children: RPC<RP, P> = ({ children, ...rest }: any) =>
+    isFn(children) && children(rest)
 
-          return typeof mapper[key] === 'function'
-            ? mapper[key](Object.assign({}, rest, props, { renderProp }))
-            : React.cloneElement(mapper[key], { children: renderProp })
-        }}
-      </Component>
-    ),
-    Children
+  const reducer = (Component: RPC<RP, P>, key: keyof RP): RPC<RP, P> => ({
+    children,
+    ...rest
+  }: {
+    children: ChildrenFn<RP>
+  }) => (
+    <Component {...rest}>
+      {props => {
+        const element: any = mapper[key]
+        const propsWithoutRest = omit<RP>(props, keys(rest))
+
+        const render = (cProps: Partial<RP>) =>
+          isFn(children) &&
+          children(assign({}, propsWithoutRest, { [key]: cProps }))
+
+        return isFn(element)
+          ? React.createElement(element, assign({}, rest, props, { render }))
+          : React.cloneElement(element, null, render)
+      }}
+    </Component>
   )
+
+  return keys(mapper).reduce(reducer, Children)
 }

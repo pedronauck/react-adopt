@@ -11,6 +11,7 @@
     "prefer-object-spread": false,
     "no-console": false,
     "no-shadowed-variable": false,
+    "max-classes-per-file": false,
 
     // Recommended built-in rules
     "no-var-keyword": true,
