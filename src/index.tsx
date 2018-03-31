@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { ComponentType, ReactNode, ReactElement } from 'react'
 
-const isAllElementValid = (values: ReactNode[]): boolean =>
-  !values.some(value => !React.isValidElement(value))
-
 export type ChildrenFn<P> = (props: P) => ReactNode
 
 export type RPC<Props> = ComponentType<{
@@ -12,31 +9,33 @@ export type RPC<Props> = ComponentType<{
 
 export type Mapper<R> = Record<keyof R, ReactElement<any> | any>
 
+const isValidRenderProp = (prop: ReactNode | ChildrenFn): boolean =>
+  React.isValidElement(prop) || typeof prop === 'function'
+
+const Children = ({ children }: any) => children()
+
 export function adopt<RP extends Record<string, any>>(
   mapper: Mapper<RP>
 ): RPC<RP> {
-  if (!isAllElementValid(Object.values(mapper))) {
+  if (!Object.values(mapper).some(isValidRenderProp)) {
     throw new Error(
       'The render props object mapper just accept valid elements as value'
     )
   }
 
-  const Initial = ({ children }: any) =>
-    children && typeof children === 'function' && children()
-
   return Object.keys(mapper).reduce(
-    (Component: RPC<RP>, key: keyof RP): RPC<RP> => ({ children }) => (
+    (Component: RPC<RP>, key: keyof RP): RPC<RP> => ({ children, ...rest }) => (
       <Component>
-        {props =>
-          React.cloneElement(mapper[key], {
-            children: (childProps: any) =>
-              children &&
-              typeof children === 'function' &&
-              children(Object.assign({}, props, { [key]: childProps })),
-          })
-        }
+        {props => {
+          const renderProp = (childProps: any) =>
+            children(Object.assign({}, props, { [key]: childProps }))
+
+          return typeof mapper[key] === 'function'
+            ? mapper[key](Object.assign({}, rest, props, { renderProp }))
+            : React.cloneElement(mapper[key], { children: renderProp })
+        }}
       </Component>
     ),
-    Initial
+    Children
   )
 }
