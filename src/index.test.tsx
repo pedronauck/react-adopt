@@ -1,21 +1,21 @@
 import * as React from 'react'
 import { shallow, mount } from 'enzyme'
+import { Value } from 'react-powerplug'
 
 import { adopt } from './'
 
 test('return one component with children props as function', () => {
-  const Foo = ({ children }) =>
-    children && typeof children === 'function' && children('foo')
-
   interface RenderProps {
-    foo: string
+    foo: { value: string }
   }
 
   const Composed = adopt<RenderProps>({
-    foo: <Foo />,
+    foo: <Value initial="foo" />,
   })
 
-  const result = mount(<Composed>{props => <div>{props.foo}</div>}</Composed>)
+  const result = mount(
+    <Composed>{({ foo }) => <div>{foo.value}</div>}</Composed>
+  )
   const { children } = result.props()
 
   expect(children).toBeDefined()
@@ -23,15 +23,9 @@ test('return one component with children props as function', () => {
 })
 
 test('rendering children component', () => {
-  const Foo = ({ children, tor }) =>
-    children && typeof children === 'function' && children(tor + 'foo')
-
-  const Bar = ({ render, tor }) =>
-    render && typeof render === 'function' && render(tor + 'bar')
-
   interface RenderProps {
-    foo: 'foo'
-    bar: 'bar'
+    foo: { value: string }
+    bar: { value: string }
   }
 
   interface Props {
@@ -39,16 +33,16 @@ test('rendering children component', () => {
   }
 
   const Composed = adopt<RenderProps, Props>({
-    bar: ({ tor, render }) => <Bar tor={tor} render={render} />,
-    foo: ({ tor, render }) => <Foo tor={tor}>{render}</Foo>,
+    foo: ({ tor, render }) => <Value initial={tor + 'foo'}>{render}</Value>,
+    bar: ({ tor, render }) => <Value initial={tor + 'bar'}>{render}</Value>,
   })
 
   const result = shallow(
     <Composed tor="tor">
-      {props => (
+      {({ foo, bar }) => (
         <div>
-          <div>{props.foo}</div>
-          <div>{props.bar}</div>
+          <div>{foo.value}</div>
+          <div>{bar.value}</div>
         </div>
       )}
     </Composed>

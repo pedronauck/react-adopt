@@ -4234,6 +4234,10 @@ react-is@^16.3.0:
   version "16.3.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.3.0.tgz#f0e8bfd8c09b480dd610b8639d9ed65c13601224"
 
+react-powerplug@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/react-powerplug/-/react-powerplug-0.1.5.tgz#f3dd7612c60efc55b6c7a2ddee284a8bcb6db783"
+
 react-reconciler@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
