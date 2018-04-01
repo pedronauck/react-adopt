@@ -13,6 +13,7 @@
 - [Usage](#--usage-demo)
   - [Working with new Context api](#working-with-new-context-api)
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
+  - [Leading with multiple params](#leading-with-multiple-params)
   - [Typescript support](#typescript-support)
 
 ## 🧐 &nbsp; Why
@@ -98,6 +99,34 @@ const Composed = adopt({
     <div>{greet.value}</div>
   )}
 </Composed>
+```
+
+### Leading with multiples params
+
+Some render props components return multiple arguments in the children function instead of single one, a simple example in the new [Query](https://www.apollographql.com/docs/react/essentials/queries.html#basic) and [Mutation](https://www.apollographql.com/docs/react/essentials/mutations.html) component from `react-apollo`. In that case, what you can do is a arbitrary render with `render` prop [using you map value as a function](#custom-render-and-retrieving-props-from-composed):
+
+```js
+import { adopt } from 'react-adopt'
+import { Mutation } from 'react-apollo'
+
+const ADD_TODO = /* ... */
+
+const addTodo = ({ render }) => (
+  <Mutation mutation={ADD_TODO}>
+    {/* that's is arbitrary render where you will pass your two arguments into single one */}
+    {(mutation, result) => render({ mutation, result })}
+   </Mutation>
+)
+
+const Composed = adopt({
+  addTodo,
+})
+
+const App = () => (
+  <Compose>
+    {({ addTodo: { mutation, result } }) => /* ... */}
+  </Compose>
+)
 ```
 
 ### Typescript support
