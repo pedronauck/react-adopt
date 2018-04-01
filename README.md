@@ -6,7 +6,7 @@
 
 ![](https://i.imgflip.com/27euu2.jpg)
 
-## 📜 Table content
+## 📜 Table of content
 
 - [Why](#why)
 - [Usage](#usage)
@@ -120,7 +120,7 @@ const foo = ({ tor, render }) => (
   <Value initial="foo">{render}</Value>
 )
 
-const Composed = adopt<RenderProps, Props>({                     
+const Composed = adopt<RenderProps, Props>({
   foo,
 })
 
