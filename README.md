@@ -6,6 +6,14 @@
 
 ![](https://i.imgflip.com/27euu2.jpg)
 
+## 📜 Table content
+
+- [Why](#why)
+- [Usage](#usage)
+  - [Working with new Context api](#working-with-new-context-api)
+  - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
+  - [Typescript support](#typescript-support)
+
 ## 🧐 &nbsp; Why
 
 [Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like that:
@@ -17,7 +25,7 @@
 * **Small**. 0.7kb minified!
 * **Extremely Simple**. Just a method!
 
-React Adopt is just a simple method that you can compose your components and return all props in a function by mapping each child prop returned by your component.
+React Adopt is just a simple method that you can compose your components and return just one component that will be a render prop component that combining each prop result from your mapper.
 
 ## 💻 &nbsp; Usage ([demo](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1))
 
@@ -31,6 +39,27 @@ Now you can use adopt to compose your components. See above an example using the
 
 ![Good](https://i.imgur.com/RXVlFwy.png)
 
+### Working with new Context api
+
+One of use case that React Adopt can fit perfectly is when you need to use [new React's context api](https://reactjs.org/docs/context.html) that use render props to create some context:
+
+```js
+import React from 'react'
+import { adopt } from 'react-adopt'
+
+const ThemeContext = React.createContext('light')
+const UserContext = React.createContext({ name: 'John' })
+
+const Context = adopt({
+  theme: <ThemeContext.Consumer />,
+  user: <UserContext.Consumer />,
+})
+
+<Context>
+  {({ theme, user }) => /* ... */}
+</Context>
+```
+
 ### Custom render and retrieving props from composed
 
 Some components don't use the `children` property as render props. For cases like that, you can pass a function as mapper value that will return your component. This function will receive as props the `render` method, the props passed on `Composed` component and the previous values from each mapper. See an example:
@@ -43,13 +72,11 @@ const Composed = adopt({
   custom: ({ render }) => <MyCustomRenderProps render={render} />
 })
 
-const App = () => (
-  <Composed>
-    {({ custom }) => (
-      <div>{custom.value}</div>
-    )}
-  </Composed>
-)
+<Composed>
+  {({ custom }) => (
+    <div>{custom.value}</div>
+  )}
+</Composed>
 ```
 
 And as I said above, you can retrieve the properties passed to the composed component using that way too:
@@ -65,13 +92,43 @@ const Composed = adopt({
   )
 })
 
-const App = () => (
-  <Composed initialGreet="Hi">
-    {({ greet }) => (
-      <div>{greet.value}</div>
-    )}
-  </Composed>
+<Composed initialGreet="Hi">
+  {({ greet }) => (
+    <div>{greet.value}</div>
+  )}
+</Composed>
+```
+
+### Typescript support
+
+React adopt has a fully typescript support when you need to type the composed component:
+
+```ts
+import * as React from 'react'
+import { adopt } from 'react-adopt'
+import { Value } from 'react-powerplug'
+
+interface RenderProps {
+  foo: { value: string }
+}
+
+interface Props {
+  tor: string
+}
+
+const foo = ({ tor, render }) => (
+  <Value initial="foo">{render}</Value>
 )
+
+const Composed = adopt<RenderProps, Props>({                     
+  foo,
+})
+
+<Composed tor="tor">
+  {({ foo, bar }) => (
+    <div>{foo.value}</div>
+  )}
+</Composed>
 ```
 
 ## 🕺 &nbsp; Contribute
