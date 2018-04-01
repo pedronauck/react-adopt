@@ -10,7 +10,7 @@
 
 - [Why](#--why)
 - [Solution](#--solution)
-- [Usage](#--usage)
+- [Usage](#--usage-demo)
   - [Working with new Context api](#working-with-new-context-api)
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
   - [Typescript support](#typescript-support)
