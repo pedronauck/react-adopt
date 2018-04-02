@@ -18,7 +18,7 @@
 
 ## 🧐 &nbsp; Why
 
-[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecossystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like that:
+[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecosystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like that:
 
 ![Bad](https://i.imgur.com/qmk3Bk5.png)
 
