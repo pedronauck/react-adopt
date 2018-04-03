@@ -70,9 +70,6 @@
       "node"
     ]
   },
-  "engines": {
-    "node": ">=9.0.0"
-  },
   "lint-staged": {
     "src/**.tsx": [
       "yarn fix:prettier",
