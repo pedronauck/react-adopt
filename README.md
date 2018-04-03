@@ -29,7 +29,12 @@
 
 React Adopt is just a simple method that you can compose your components and return just one component that will be a render prop component that combining each prop result from your mapper.
 
-## 💻 &nbsp; Usage ([demo](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1))
+## 📟 &nbsp; Demos
+
+- [Basic example](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1)
+- [Todo App example using React Apollo](https://codesandbox.io/s/3x7n8wyp15?hidenavigation=1)
+
+## 💻 &nbsp; Usage
 
 Install as project dependency:
 
@@ -128,6 +133,8 @@ const App = () => (
   </Compose>
 )
 ```
+
+See [this demo](https://codesandbox.io/s/3x7n8wyp15?hidenavigation=1) for a complete explanation about that.
 
 ### Typescript support
 
