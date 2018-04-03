@@ -10,6 +10,7 @@
 
 - [Why](#--why)
 - [Solution](#--solution)
+- [Demos](#--demos)
 - [Usage](#--usage-demo)
   - [Working with new Context api](#working-with-new-context-api)
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
@@ -33,6 +34,7 @@ React Adopt is just a simple method that you can compose your components and ret
 
 - [Basic example](https://codesandbox.io/s/vq1wl37m0y?hidenavigation=1)
 - [Todo App example using React Apollo](https://codesandbox.io/s/3x7n8wyp15?hidenavigation=1)
+- [Example with new Context API](https://codesandbox.io/s/qv3m6yk2n4?hidenavigation=1)
 
 ## 💻 &nbsp; Usage
 
@@ -66,6 +68,8 @@ const Context = adopt({
   {({ theme, user }) => /* ... */}
 </Context>
 ```
+
+See [this demo](https://codesandbox.io/s/qv3m6yk2n4?hidenavigation=1) for a better comprehension
 
 ### Custom render and retrieving props from composed
 
