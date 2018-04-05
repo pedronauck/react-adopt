@@ -6,7 +6,9 @@
   "module": "dist/index.m.js",
   "source": "src/index.tsx",
   "license": "MIT",
-  "repository": "git@github.com:pedronauck/pedronauck.git",
+  "repository": "pedronauck/react-adopt",
+  "homepage": "https://github.com/pedronauck/react-adopt",
+  "bugs": "https://github.com/pedronauck/react-adopt/issues",
   "author": "Pedro Nauck <pedronauck@gmail.com>",
   "scripts": {
     "dev": "libundler watch --ts",
