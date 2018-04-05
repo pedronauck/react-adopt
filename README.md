@@ -73,7 +73,7 @@ See [this demo](https://codesandbox.io/s/qv3m6yk2n4?hidenavigation=1) for a bett
 
 ### Custom render and retrieving props from composed
 
-Some components don't use the `children` property as render props. For cases like that, you can pass a function as mapper value that will return your component. This function will receive as props the `render` method, the props passed on `Composed` component and the previous values from each mapper. See an example:
+Some components don't use the prop called `children` to make work render props. For cases like that, when you define your mapper you can pass a simple function as mapper value that will return your component, instead of a jsx element. This function will receive a prop `render` that will be responsible to make render, the props passed on `Composed` component and the previous values from each mapper. See an example:
 
 ```js
 import { adopt } from 'react-adopt'
@@ -107,6 +107,28 @@ const Composed = adopt({
   {({ greet }) => (
     <div>{greet.value}</div>
   )}
+</Composed>
+```
+
+And get previous mapper results as prop for compose:
+
+```js
+import { adopt } from 'react-adopt'
+
+import { User, Cart, ShippingRate } from 'my-containers'
+
+const Composed = adopt({
+  cart: <Cart />,
+  user: <User />,
+  shippingRates: ({ user, cart, render }) => (
+    <ShippingRate zipcode={user.zipcode} items={cart.items}>
+      {render}
+    </ShippingRate>
+  )
+})
+
+<Composed>
+  {({ cart, user, shippingRates }) => /* ... */ }
 </Composed>
 ```
 
