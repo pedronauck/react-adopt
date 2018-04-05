@@ -44,7 +44,7 @@ Install as project dependency:
 $ yarn add react-adopt
 ```
 
-Now you can use adopt to compose your components. See above an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
+Now you can use adopt to compose your components. See bellow an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
 
 ![Good](https://i.imgur.com/RXVlFwy.png)
 
