@@ -22,6 +22,11 @@
     "release": "np",
     "prerelease": "yarn build:prod"
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "react",
     "render-props",
