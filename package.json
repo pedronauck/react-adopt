@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
   "module": "dist/index.m.js",
+  "types": "dist/index.d.ts",
   "source": "src/index.tsx",
   "license": "MIT",
   "repository": "pedronauck/react-adopt",
