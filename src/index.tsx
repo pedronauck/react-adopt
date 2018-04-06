@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 import { ReactNode, ReactElement } from 'react'
 
 const { values, keys, assign } = Object
 
-export type ChildrenFn<P> = (props: P) => ReactNode
+export declare type ChildrenFn<P> = (props: P) => JSX.Element | null
 
 function omit<R = object>(omitProps: string[], obj: any): R {
   const newObj = keys(obj)
@@ -25,23 +25,26 @@ const isFn = (val: any): boolean => Boolean(val) && typeof val === 'function'
 const isValidRenderProp = (prop: ReactNode | ChildrenFn<any>): boolean =>
   React.isValidElement(prop) || isFn(prop)
 
-export type RPC<RP, P = {}> = React.SFC<
+export declare type RPC<RP, P = {}> = React.SFC<
   P & {
     children: ChildrenFn<RP>
   }
 >
 
-export type MapperComponent<RP, P = {}> = React.SFC<
-  P & {
-    render?: ChildrenFn<RP & P>
-  }
+export declare type MapperComponent<RP, P> = React.SFC<
+  RP &
+    P & {
+      render?: ChildrenFn<any>
+    }
 >
 
-export type MapperValue<RP, P> = ReactElement<any> | MapperComponent<RP, P>
+export declare type MapperValue<RP, P> =
+  | ReactElement<any>
+  | MapperComponent<RP, P>
 
-export type Mapper<RP, P> = Record<keyof RP, MapperValue<RP, P>>
+export declare type Mapper<RP, P> = Record<keyof RP, MapperValue<RP, P>>
 
-export function adopt<RP = any, P = {}>(mapper: Mapper<RP, P>): RPC<RP, P> {
+export function adopt<RP = any, P = any>(mapper: Mapper<RP, P>): RPC<RP, P> {
   if (!values(mapper).some(isValidRenderProp)) {
     throw new Error(
       'The render props object mapper just accept valid elements as value'
@@ -61,12 +64,13 @@ export function adopt<RP = any, P = {}>(mapper: Mapper<RP, P>): RPC<RP, P> {
         const propsWithoutRest = omit<RP>(keys(rest), props)
 
         const render: ChildrenFn<RP> = cProps =>
-          isFn(children) &&
-          children(
-            assign({}, propsWithoutRest, {
-              [key]: cProps,
-            })
-          )
+          isFn(children)
+            ? children(
+                assign({}, propsWithoutRest, {
+                  [key]: cProps,
+                })
+              )
+            : null
 
         return isFn(element)
           ? React.createElement(element, assign({}, rest, props, { render }))
