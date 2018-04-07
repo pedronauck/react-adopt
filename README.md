@@ -16,6 +16,7 @@
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
   - [Leading with multiple params](#leading-with-multiple-params)
   - [Typescript support](#typescript-support)
+  - [Inline composition](#inline-composition)
 
 ## 🧐 &nbsp; Why
 
@@ -192,6 +193,25 @@ const Composed = adopt<RenderProps, Props>({
     <div>{foo.value}</div>
   )}
 </Composed>
+```
+
+### Inline composition
+
+If you dont care about [typings](#typescript-support) and need something more easy and quick, you can choose to use a inline composition by importing `<Adopt>` component and passing your mapper as prop:
+
+```js
+import React from 'react'
+import { Adopt } from 'react-adopt'
+import { Value } from 'react-powerplug'
+
+const mapper = {
+  greet: <Value initial="Hi" />,
+  name: <Value initial="John" />
+}
+
+<Adopt mapper={mapper}>
+  {({ greet, name }) => /* ... */}
+</Adopt>
 ```
 
 ## 🕺 &nbsp; Contribute

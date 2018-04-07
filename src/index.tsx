@@ -81,3 +81,15 @@ export function adopt<RP = any, P = any>(mapper: Mapper<RP, P>): RPC<RP, P> {
 
   return keys(mapper).reduce(reducer, Children)
 }
+
+export type AdoptProps<RP, P> = P & {
+  mapper: Mapper<RP, P>
+  children: ChildrenFn<RP>
+}
+
+export const Adopt: React.SFC<AdoptProps<any, any>> = props => {
+  const Composed = adopt(props.mapper)
+  const composedProps = omit(['children', 'mapper'], props)
+
+  return <Composed {...composedProps}>{props.children}</Composed>
+}

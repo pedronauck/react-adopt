@@ -2,7 +2,7 @@ import * as React from 'react'
 import { shallow, mount } from 'enzyme'
 import { Value } from 'react-powerplug'
 
-import { adopt } from './'
+import { adopt, Adopt } from './'
 
 test('return one component with children props as function', () => {
   interface RenderProps {
@@ -129,4 +129,40 @@ test('throw with a wrong value on mapper', () => {
   }).toThrowError(
     'The render props object mapper just accept valid elements as value'
   )
+})
+
+test('inline composition using <Adopt> component', () => {
+  const Foo = ({ children }) => children('foo')
+  const children = jest.fn(({ foo }) => <div>{foo}</div>)
+
+  const mapper = {
+    foo: <Foo />,
+  }
+
+  const element = <Adopt mapper={mapper}>{children}</Adopt>
+
+  mount(element)
+  expect(children).toHaveBeenCalledWith({ foo: 'foo' })
+
+  const result = shallow(element)
+
+  expect(result.children().length).toBe(1)
+  expect(result.html()).toBe('<div>foo</div>')
+})
+
+test('changing <Adopt> properties on the fly', () => {
+  const Foo = ({ children, value }) => children(value)
+  const children = jest.fn(({ foo }) => <div>{foo}</div>)
+
+  const Component = ({ value }) => (
+    <Adopt mapper={{ foo: <Foo value={value} /> }}>
+      {({ foo }) => <div>{foo}</div>}
+    </Adopt>
+  )
+
+  const wrapper = mount(<Component value="foo" />)
+
+  expect(wrapper.text()).toBe('foo')
+  wrapper.setProps({ value: 'bar' })
+  expect(wrapper.text()).toBe('bar')
 })
