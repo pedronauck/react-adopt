@@ -87,9 +87,14 @@ export type AdoptProps<RP, P> = P & {
   children: ChildrenFn<RP>
 }
 
-export const Adopt: React.SFC<AdoptProps<any, any>> = props => {
-  const Composed = adopt(props.mapper)
-  const composedProps = omit(['children', 'mapper'], props)
+export class Adopt extends React.Component<AdoptProps<any, any>> {
+  constructor(props) {
+    super(props)
+    this.Composed = adopt(props.mapper)
+  }
 
-  return <Composed {...composedProps}>{props.children}</Composed>
+  render() {
+    const { mapper, ...props } = this.props
+    return <this.Composed {...props} />
+  }
 }
