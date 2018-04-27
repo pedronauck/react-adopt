@@ -149,20 +149,3 @@ test('inline composition using <Adopt> component', () => {
   expect(result.children().length).toBe(1)
   expect(result.html()).toBe('<div>foo</div>')
 })
-
-test('changing <Adopt> properties on the fly', () => {
-  const Foo = ({ children, value }) => children(value)
-  const children = jest.fn(({ foo }) => <div>{foo}</div>)
-
-  const Component = ({ value }) => (
-    <Adopt mapper={{ foo: <Foo value={value} /> }}>
-      {({ foo }) => <div>{foo}</div>}
-    </Adopt>
-  )
-
-  const wrapper = mount(<Component value="foo" />)
-
-  expect(wrapper.text()).toBe('foo')
-  wrapper.setProps({ value: 'bar' })
-  expect(wrapper.text()).toBe('bar')
-})
