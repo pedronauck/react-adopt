@@ -59,10 +59,6 @@
     "@babel/types" "7.0.0-beta.35"
     lodash "^4.2.0"
 
-"@babel/helper-plugin-utils@7.0.0-beta.42":
-  version "7.0.0-beta.42"
-  resolved "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.42.tgz#9aa8b3e5dc72abea6b4f686712a7363cb29ea057"
-
 "@babel/helper-split-export-declaration@7.0.0-beta.42":
   version "7.0.0-beta.42"
   resolved "https://registry.npmjs.org/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.42.tgz#0d0d5254220a9cc4e7e226240306b939dc210ee7"
@@ -84,12 +80,6 @@
     chalk "^2.0.0"
     esutils "^2.0.2"
     js-tokens "^3.0.0"
-
-"@babel/plugin-external-helpers@^7.0.0-beta.42":
-  version "7.0.0-beta.42"
-  resolved "https://registry.npmjs.org/@babel/plugin-external-helpers/-/plugin-external-helpers-7.0.0-beta.42.tgz#88b6bc650490026553aaa1733486d84bad177481"
-  dependencies:
-    "@babel/helper-plugin-utils" "7.0.0-beta.42"
 
 "@babel/template@7.0.0-beta.42":
   version "7.0.0-beta.42"
@@ -147,9 +137,16 @@
   dependencies:
     "@types/enzyme" "*"
 
-"@types/enzyme@*", "@types/enzyme@^3.1.9":
+"@types/enzyme@*":
   version "3.1.9"
   resolved "https://registry.npmjs.org/@types/enzyme/-/enzyme-3.1.9.tgz#fbd97f3beb7cad76fc9c6f04c97d77f4834522ef"
+  dependencies:
+    "@types/cheerio" "*"
+    "@types/react" "*"
+
+"@types/enzyme@^3.1.10":
+  version "3.1.10"
+  resolved "https://registry.npmjs.org/@types/enzyme/-/enzyme-3.1.10.tgz#28108a9864e65699751469551a803a35d2e26160"
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
@@ -158,17 +155,23 @@
   version "0.0.38"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-0.0.38.tgz#c1be40aa933723c608820a99a373a16d215a1ca2"
 
-"@types/jest@^22.2.2":
-  version "22.2.2"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-22.2.2.tgz#afe5dacbd00d65325f52da0ed3e76e259629ac9d"
+"@types/jest@^22.2.3":
+  version "22.2.3"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
 
 "@types/node@*":
   version "9.6.1"
   resolved "https://registry.npmjs.org/@types/node/-/node-9.6.1.tgz#e2d374ef15b315b48e7efc308fa1a7cd51faa06c"
 
-"@types/react@*", "@types/react@^16.1.0":
+"@types/react@*":
   version "16.1.0"
   resolved "https://registry.npmjs.org/@types/react/-/react-16.1.0.tgz#6c0e9955ce73f332b4a1948d45decaf18c764c6e"
+
+"@types/react@^16.3.13":
+  version "16.3.13"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.3.13.tgz#47d466462b774556c1174ea0eda22c0578643362"
+  dependencies:
+    csstype "^2.2.0"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -1095,6 +1098,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   resolved "https://registry.npmjs.org/cssstyle/-/cssstyle-0.2.37.tgz#541097234cb2513c83ceed3acddc27ff27987d54"
   dependencies:
     cssom "0.3.x"
+
+csstype@^2.2.0:
+  version "2.4.1"
+  resolved "https://registry.npmjs.org/csstype/-/csstype-2.4.1.tgz#ba35a94259cffc07ed022954737a1da690dcae2c"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -3118,12 +3125,11 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libundler@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.npmjs.org/libundler/-/libundler-1.5.1.tgz#d3434301df9e5c300dfcd488e3a06109c96f0118"
+libundler@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.npmjs.org/libundler/-/libundler-1.6.4.tgz#88acdf9935448617f50a7215b081e250dae91556"
   dependencies:
     "@babel/core" "^7.0.0-beta.42"
-    "@babel/plugin-external-helpers" "^7.0.0-beta.42"
     bluebird "^3.5.1"
     bluebird-co "^2.2.0"
     chalk "^2.3.2"
@@ -3145,7 +3151,6 @@ libundler@^1.5.1:
     rollup-plugin-commonjs "^9.1.0"
     rollup-plugin-gzip "^1.3.0"
     rollup-plugin-node-resolve "^3.3.0"
-    rollup-plugin-replace "^2.0.0"
     rollup-plugin-sizes "^0.4.0"
     rollup-plugin-sourcemaps "^0.4.2"
     rollup-plugin-typescript2 "^0.12.0"
@@ -3156,9 +3161,9 @@ libundler@^1.5.1:
     uglify-es "^3.3.9"
     yargs "^11.0.0"
 
-lint-staged@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/lint-staged/-/lint-staged-7.0.0.tgz#57926c63201e7bd38ca0576d74391efa699b4a9d"
+lint-staged@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.npmjs.org/lint-staged/-/lint-staged-7.0.5.tgz#1ed04c4bb2013579a3d4df4dfe0f2ea1cd988fad"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.3.1"
@@ -3178,8 +3183,9 @@ lint-staged@^7.0.0:
     p-map "^1.1.1"
     path-is-inside "^1.0.2"
     pify "^3.0.0"
-    please-upgrade-node "^3.0.1"
-    staged-git-files "1.1.0"
+    please-upgrade-node "^3.0.2"
+    staged-git-files "1.1.1"
+    string-argv "^0.0.2"
     stringify-object "^3.2.2"
 
 listr-input@^0.1.1:
@@ -4073,9 +4079,11 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-please-upgrade-node@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/please-upgrade-node/-/please-upgrade-node-3.0.1.tgz#0a681f2c18915e5433a5ca2cd94e0b8206a782db"
+please-upgrade-node@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/please-upgrade-node/-/please-upgrade-node-3.0.2.tgz#7b9eaeca35aa4a43d6ebdfd10616c042f9a83acc"
+  dependencies:
+    semver-compare "^1.0.0"
 
 plur@^2.1.2:
   version "2.1.2"
@@ -4107,9 +4115,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.11.1:
-  version "1.11.1"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
+prettier@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-1.12.1.tgz#c1ad20e803e7749faf905a409d2367e06bbe7325"
 
 pretty-error@^2.1.1:
   version "2.1.1"
@@ -4221,9 +4229,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.3.0:
-  version "16.3.0"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.3.0.tgz#b318e52184188ecb5c3e81117420cca40618643e"
+react-dom@^16.3.2:
+  version "16.3.2"
+  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.3.2.tgz#cb90f107e09536d683d84ed5d4888e9640e0e4df"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -4256,9 +4264,9 @@ react-test-renderer@^16.0.0-0:
     prop-types "^15.6.0"
     react-is "^16.3.0"
 
-react@^16.3.0:
-  version "16.3.0"
-  resolved "https://registry.npmjs.org/react/-/react-16.3.0.tgz#fc5a01c68f91e9b38e92cf83f7b795ebdca8ddff"
+react@^16.3.2:
+  version "16.3.2"
+  resolved "https://registry.npmjs.org/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -4585,14 +4593,6 @@ rollup-plugin-node-resolve@^3.3.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
-rollup-plugin-replace@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-replace/-/rollup-plugin-replace-2.0.0.tgz#19074089c8ed57184b8cc64e967a03d095119277"
-  dependencies:
-    magic-string "^0.22.4"
-    minimatch "^3.0.2"
-    rollup-pluginutils "^2.0.1"
-
 rollup-plugin-sizes@^0.4.0:
   version "0.4.2"
   resolved "https://registry.npmjs.org/rollup-plugin-sizes/-/rollup-plugin-sizes-0.4.2.tgz#1d97ecda2667a43afbb19d801e2476f80f67d12f"
@@ -4709,6 +4709,10 @@ sane@^2.0.0:
 sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+
+semver-compare@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
 
 semver-diff@^2.0.0:
   version "2.1.0"
@@ -4944,9 +4948,9 @@ stack-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/stack-utils/-/stack-utils-1.0.1.tgz#d4f33ab54e8e38778b0ca5cfd3b3afb12db68620"
 
-staged-git-files@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/staged-git-files/-/staged-git-files-1.1.0.tgz#1a9bb131c1885601023c7aaddd3d54c22142c526"
+staged-git-files@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/staged-git-files/-/staged-git-files-1.1.1.tgz#37c2218ef0d6d26178b1310719309a16a59f8f7b"
 
 static-extend@^0.1.1:
   version "0.1.2"
@@ -4974,6 +4978,10 @@ stream-to-observable@^0.2.0:
   resolved "https://registry.npmjs.org/stream-to-observable/-/stream-to-observable-0.2.0.tgz#59d6ea393d87c2c0ddac10aa0d561bc6ba6f0e10"
   dependencies:
     any-observable "^0.2.0"
+
+string-argv@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/string-argv/-/string-argv-0.0.2.tgz#dac30408690c21f3c3630a3ff3a05877bdcbd736"
 
 string-length@^2.0.0:
   version "2.0.0"
@@ -5234,9 +5242,9 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-ts-jest@^22.4.2:
-  version "22.4.2"
-  resolved "https://registry.npmjs.org/ts-jest/-/ts-jest-22.4.2.tgz#2137bc0899b14dfb1d58257ee10b18ab8a2d92c5"
+ts-jest@^22.4.4:
+  version "22.4.4"
+  resolved "https://registry.npmjs.org/ts-jest/-/ts-jest-22.4.4.tgz#7b5c0abb2188fe7170840df9f80e78659aaf8a24"
   dependencies:
     babel-core "^6.26.0"
     babel-plugin-istanbul "^4.1.4"
@@ -5248,9 +5256,9 @@ ts-jest@^22.4.2:
     pkg-dir "^2.0.0"
     yargs "^11.0.0"
 
-ts-node@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/ts-node/-/ts-node-5.0.1.tgz#78e5d1cb3f704de1b641e43b76be2d4094f06f81"
+ts-node@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/ts-node/-/ts-node-6.0.1.tgz#e2dd65abcadae530d2b2109cfd19202ba9f90402"
   dependencies:
     arrify "^1.0.0"
     chalk "^2.3.0"
@@ -5265,9 +5273,9 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 
-tslint-config-prettier@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.npmjs.org/tslint-config-prettier/-/tslint-config-prettier-1.10.0.tgz#5063c413d43de4f6988c73727f65ecfc239054ec"
+tslint-config-prettier@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/tslint-config-prettier/-/tslint-config-prettier-1.12.0.tgz#bc8504f286ecf42b906f3d1126a093114f5729cc"
 
 tslint@^5.9.1:
   version "5.9.1"
@@ -5316,9 +5324,9 @@ typescript@2.7.2:
   version "2.7.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
-typescript@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-2.8.1.tgz#6160e4f8f195d5ba81d4876f9c0cc1fbc0820624"
+typescript@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-2.8.3.tgz#5d817f9b6f31bb871835f4edf0089f21abe6c170"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
