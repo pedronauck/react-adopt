@@ -20,7 +20,7 @@
 
 ## 🧐 &nbsp; Why
 
-[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecosystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like that:
+[Render Props](https://reactjs.org/docs/render-props.html) are the new hype of React's ecosystem, that's a fact. So, when you need to use more than one render props component together, this can be boring and generate something called a *"render props callback hell"*, like this:
 
 ![Bad](https://i.imgur.com/qmk3Bk5.png)
 
@@ -29,7 +29,7 @@
 * **Small**. 0.7kb minified!
 * **Extremely Simple**. Just a method!
 
-React Adopt is just a simple method that you can compose your components and return just one component that will be a render prop component that combining each prop result from your mapper.
+React Adopt is a simple method that composes multiple render prop components, combining each prop result from your mapper.
 
 ## 📟 &nbsp; Demos
 
@@ -45,15 +45,15 @@ Install as project dependency:
 $ yarn add react-adopt
 ```
 
-Now you can use adopt to compose your components. See bellow an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
+Now you can use React Adopt to compose your components. See below for an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
 
 ![Good](https://i.imgur.com/RXVlFwy.png)
 
 ### Working with new Context api
 
-One of use case that React Adopt can fit perfectly is when you need to use [new React's context api](https://reactjs.org/docs/context.html) that use render props to create some context:
+One use case that React Adopt can fit perfectly is when you need to use [React's new context api](https://reactjs.org/docs/context.html) that use render props to create some context:
 
-```js
+```jsx
 import React from 'react'
 import { adopt } from 'react-adopt'
 
@@ -70,13 +70,13 @@ const Context = adopt({
 </Context>
 ```
 
-See [this demo](https://codesandbox.io/s/qv3m6yk2n4?hidenavigation=1) for a better comprehension
+See [this demo](https://codesandbox.io/s/qv3m6yk2n4?hidenavigation=1) for a better explanation.
 
 ### Custom render and retrieving props from composed
 
-Some components don't use the prop called `children` to make work render props. For cases like that, when you define your mapper you can pass a simple function as mapper value that will return your component, instead of a jsx element. This function will receive a prop `render` that will be responsible to make render, the props passed on `Composed` component and the previous values from each mapper. See an example:
+Some components don't use the `children` prop for render props to work. For cases like this, you can pass a function instead of a jsx element to your mapper. This function will receive a `render` prop that will be responsible for your render, the props passed on `Composed` component, and the previous values from each mapper. See an example:
 
-```js
+```jsx
 import { adopt } from 'react-adopt'
 import MyCustomRenderProps from 'my-custom-render-props'
 
@@ -91,10 +91,10 @@ const Composed = adopt({
 </Composed>
 ```
 
-And as I said above, you can retrieve the properties passed to the composed component using that way too:
+You can also retrieve the properties passed to the composed component this way too:
 
 
-```js
+```jsx
 import { adopt } from 'react-adopt'
 import { Value } from 'react-powerplug'
 
@@ -113,7 +113,7 @@ const Composed = adopt({
 
 And get previous mapper results as prop for compose:
 
-```js
+```jsx
 import { adopt } from 'react-adopt'
 
 import { User, Cart, ShippingRate } from 'my-containers'
@@ -133,9 +133,9 @@ const Composed = adopt({
 </Composed>
 ```
 
-### Leading with multiples params
+### Leading with multiple params
 
-Some render props components return multiple arguments in the children function instead of single one, a simple example in the new [Query](https://www.apollographql.com/docs/react/essentials/queries.html#basic) and [Mutation](https://www.apollographql.com/docs/react/essentials/mutations.html) component from `react-apollo`. In that case, what you can do is a arbitrary render with `render` prop [using you map value as a function](#custom-render-and-retrieving-props-from-composed):
+Some render props components return multiple arguments in the children function instead of a single one (see a simple example in the new [Query](https://www.apollographql.com/docs/react/essentials/queries.html#basic) and [Mutation](https://www.apollographql.com/docs/react/essentials/mutations.html) component from `react-apollo`). In this case, you can do an arbitrary render with `render` prop [using your map value as a function](#custom-render-and-retrieving-props-from-composed):
 
 ```js
 import { adopt } from 'react-adopt'
@@ -145,7 +145,7 @@ const ADD_TODO = /* ... */
 
 const addTodo = ({ render }) => (
   <Mutation mutation={ADD_TODO}>
-    {/* that's is arbitrary render where you will pass your two arguments into single one */}
+    {/* this is an arbitrary render where you will pass your two arguments into a single one */}
     {(mutation, result) => render({ mutation, result })}
    </Mutation>
 )
@@ -161,11 +161,11 @@ const App = () => (
 )
 ```
 
-See [this demo](https://codesandbox.io/s/3x7n8wyp15?hidenavigation=1) for a complete explanation about that.
+See [this demo](https://codesandbox.io/s/3x7n8wyp15?hidenavigation=1) for a complete explanation about multiple params..
 
 ### Typescript support
 
-React adopt has a fully typescript support when you need to type the composed component:
+React Adopt has full typescript support when you need to type the composed component:
 
 ```ts
 import * as React from 'react'
@@ -197,7 +197,7 @@ const Composed = adopt<RenderProps, Props>({
 
 ### Inline composition
 
-If you dont care about [typings](#typescript-support) and need something more easy and quick, you can choose to use a inline composition by importing `<Adopt>` component and passing your mapper as prop:
+If you dont care about [typings](#typescript-support) and need something more easy and quick, you can choose to use an inline composition by importing the `<Adopt>` component and passing your mapper as a prop:
 
 ```js
 import React from 'react'
