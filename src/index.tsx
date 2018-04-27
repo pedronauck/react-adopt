@@ -88,12 +88,14 @@ export type AdoptProps<RP, P> = P & {
 }
 
 export class Adopt extends React.Component<AdoptProps<any, any>> {
-  constructor(props) {
+  Composed: React.ComponentType<any>
+
+  constructor(props: any) {
     super(props)
     this.Composed = adopt(props.mapper)
   }
 
-  render() {
+  public render(): JSX.Element {
     const { mapper, ...props } = this.props
     return <this.Composed {...props} />
   }
