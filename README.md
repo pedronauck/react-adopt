@@ -14,6 +14,7 @@
 - [Usage](#--usage-demo)
   - [Working with new Context api](#working-with-new-context-api)
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
+  - [Mapping props from mappers](#mapping-props-from-mappers)
   - [Leading with multiple params](#leading-with-multiple-params)
   - [Typescript support](#typescript-support)
   - [Inline composition](#inline-composition)
@@ -131,6 +132,32 @@ const Composed = adopt({
 <Composed>
   {({ cart, user, shippingRates }) => /* ... */ }
 </Composed>
+```
+
+### Mapping props from mappers
+
+Sometimes get properties from your mappers can be kind a boring depending how nest is the result from each mapper. To easily avoid deep nested objects or combine your results, you can map the final results into a single object using de `mapProps` function as second parameter.
+
+```js
+import { adopt } from 'react-adopt'
+import { Value } from 'react-powerplug'
+
+const mapper = {
+  greet: <Value initial="Hi" />,
+  name: <Value initial="John" />,
+}
+
+const mapProps = ({ greet, name }) => ({
+  message: `${greet.value} ${name.value}`,
+})
+
+const Composed = adopt(mapper, mapProps)
+
+const App = () => (
+  <Composed>
+    {({ message }) => /* ... */}
+  </Composed>
+)
 ```
 
 ### Leading with multiple params

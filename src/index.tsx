@@ -44,17 +44,23 @@ export declare type MapperValue<RP, P> =
 
 export declare type Mapper<RP, P> = Record<keyof RP, MapperValue<RP, P>>
 
-export function adopt<RP = any, P = any>(mapper: Mapper<RP, P>): RPC<RP, P> {
+export declare type MapProps<RP> = (props: any) => RP
+
+export function adopt<RP = any, P = any>(
+  mapper: Mapper<RP, P>,
+  mapProps?: MapProps<RP>
+): RPC<RP, P> {
   if (!values(mapper).some(isValidRenderProp)) {
     throw new Error(
       'The render props object mapper just accept valid elements as value'
     )
   }
 
+  const mapperKeys = keys(mapper)
   const Children: any = ({ children, ...rest }: any) =>
     isFn(children) && children(rest)
 
-  const reducer = (Component: RPC<RP>, key: string): RPC<RP> => ({
+  const reducer = (Component: RPC<RP>, key: string, idx: number): RPC<RP> => ({
     children,
     ...rest
   }) => (
@@ -62,15 +68,21 @@ export function adopt<RP = any, P = any>(mapper: Mapper<RP, P>): RPC<RP, P> {
       {props => {
         const element = prop(key, mapper)
         const propsWithoutRest = omit<RP>(keys(rest), props)
+        const isLast = idx === mapperKeys.length - 1
 
-        const render: ChildrenFn<RP> = cProps =>
-          isFn(children)
+        const render: ChildrenFn<RP> = cProps => {
+          const renderProps = assign({}, propsWithoutRest, {
+            [key]: cProps,
+          })
+
+          return isFn(children)
             ? children(
-                assign({}, propsWithoutRest, {
-                  [key]: cProps,
-                })
+                mapProps && isFn(mapProps) && isLast
+                  ? mapProps(renderProps)
+                  : renderProps
               )
             : null
+        }
 
         return isFn(element)
           ? React.createElement(element, assign({}, rest, props, { render }))
@@ -79,12 +91,13 @@ export function adopt<RP = any, P = any>(mapper: Mapper<RP, P>): RPC<RP, P> {
     </Component>
   )
 
-  return keys(mapper).reduce(reducer, Children)
+  return mapperKeys.reduce(reducer, Children)
 }
 
 export type AdoptProps<RP, P> = P & {
   mapper: Mapper<RP, P>
   children: ChildrenFn<RP>
+  mapProps?: MapProps<RP>
 }
 
 export class Adopt extends React.Component<AdoptProps<any, any>> {
@@ -92,7 +105,7 @@ export class Adopt extends React.Component<AdoptProps<any, any>> {
 
   constructor(props: any) {
     super(props)
-    this.Composed = adopt(props.mapper)
+    this.Composed = adopt(props.mapper, this.props.mapProps)
   }
 
   public render(): JSX.Element {

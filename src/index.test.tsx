@@ -149,3 +149,42 @@ test('inline composition using <Adopt> component', () => {
   expect(result.children().length).toBe(1)
   expect(result.html()).toBe('<div>foo</div>')
 })
+
+test('mapping props as second parameter of adopt()', () => {
+  const children = jest.fn(() => null)
+
+  const Composed = adopt(
+    {
+      foo: <Value initial="foo" />,
+      bar: <Value initial="bar" />,
+    },
+    ({ foo, bar }) => ({
+      foobar: foo.value + bar.value,
+    })
+  )
+
+  mount(<Composed>{children}</Composed>)
+
+  expect(children).toHaveBeenCalledWith({ foobar: 'foobar' })
+})
+
+test('mapping props as prop of <Adopt />', () => {
+  const children = jest.fn(() => null)
+
+  const mapper = {
+    foo: <Value initial="foo" />,
+    bar: <Value initial="bar" />,
+  }
+
+  const mapProps = ({ foo, bar }) => ({
+    foobar: foo.value + bar.value,
+  })
+
+  mount(
+    <Adopt mapper={mapper} mapProps={mapProps}>
+      {children}
+    </Adopt>
+  )
+
+  expect(children).toHaveBeenCalledWith({ foobar: 'foobar' })
+})
