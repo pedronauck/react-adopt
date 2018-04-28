@@ -109,7 +109,7 @@ export class Adopt extends React.Component<AdoptProps<any, any>> {
   }
 
   public render(): JSX.Element {
-    const { mapper, ...props } = this.props
+    const { mapper, mapProps, ...props } = this.props
     return <this.Composed {...props} />
   }
 }
