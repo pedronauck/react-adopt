@@ -136,7 +136,7 @@ const Composed = adopt({
 
 ### Mapping props from mapper
 
-Sometimes get properties from your mappers can be kind a boring depending how nest is the result from each mapper. To easily avoid deep nested objects or combine your results, you can map the final results into a single object using de `mapProps` function as second parameter.
+Sometimes, get properties from your mappers can be kind of boring depending on how nested the result from each mapper. To easily avoid deeply nested objects or combine your results, you can map the final results into a single object using the `mapProps` function as the second parameter.
 
 ```js
 import { adopt } from 'react-adopt'
