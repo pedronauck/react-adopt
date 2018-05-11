@@ -28,6 +28,7 @@ const isValidRenderProp = (prop: ReactNode | ChildrenFn<any>): boolean =>
 export declare type RPC<RP, P = {}> = React.SFC<
   P & {
     children: ChildrenFn<RP>
+    render?: ChildrenFn<RP>
   }
 >
 
@@ -61,6 +62,7 @@ export function adopt<RP = any, P = any>(
     isFn(children) && children(rest)
 
   const reducer = (Component: RPC<RP>, key: string, idx: number): RPC<RP> => ({
+    render,
     children,
     ...rest
   }) => (
@@ -70,23 +72,29 @@ export function adopt<RP = any, P = any>(
         const propsWithoutRest = omit<RP>(keys(rest), props)
         const isLast = idx === mapperKeys.length - 1
 
-        const render: ChildrenFn<RP> = cProps => {
+        const renderFn: ChildrenFn<RP> = cProps => {
           const renderProps = assign({}, propsWithoutRest, {
             [key]: cProps,
           })
 
-          return isFn(children)
-            ? children(
-                mapProps && isFn(mapProps) && isLast
-                  ? mapProps(renderProps)
-                  : renderProps
-              )
-            : null
+          const propsToPass =
+            mapProps && isFn(mapProps) && isLast
+              ? mapProps(renderProps)
+              : renderProps
+
+          return render && isFn(render)
+            ? render(propsToPass)
+            : isFn(children)
+              ? children(propsToPass)
+              : null
         }
 
         return isFn(element)
-          ? React.createElement(element, assign({}, rest, props, { render }))
-          : React.cloneElement(element, {}, render)
+          ? React.createElement(
+              element,
+              assign({}, rest, props, { render: renderFn })
+            )
+          : React.cloneElement(element, {}, renderFn)
       }}
     </Component>
   )

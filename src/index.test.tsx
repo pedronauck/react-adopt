@@ -52,6 +52,19 @@ test('rendering children component', () => {
   expect(result.html()).toBe('<div><div>torfoo</div><div>torbar</div></div>')
 })
 
+test('using a render prop on composed component', () => {
+  const Composed = adopt({
+    foo: <Value initial="foo" />,
+  })
+
+  const result = shallow(
+    <Composed render={({ foo }) => <div>{foo.value}</div>} />
+  )
+
+  expect(result.children().length).toBe(1)
+  expect(result.html()).toBe('<div>foo</div>')
+})
+
 test('passing a function', () => {
   const Foo = ({ children }) => children('foo')
   const foo = jest.fn(({ render }) => <Foo>{render}</Foo>)
