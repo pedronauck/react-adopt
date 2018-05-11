@@ -14,7 +14,7 @@ test('return one component with children props as function', () => {
   })
 
   const result = mount(
-    <Composed>{({ foo }) => <div>{foo.value}</div>}</Composed>
+    <Composed>{({ foo }: any) => <div>{foo.value}</div>}</Composed>
   )
   const { children } = result.props()
 
@@ -58,7 +58,7 @@ test('using a render prop on composed component', () => {
   })
 
   const result = shallow(
-    <Composed render={({ foo }) => <div>{foo.value}</div>} />
+    <Composed render={({ foo }: any) => <div>{foo.value}</div>} />
   )
 
   expect(result.children().length).toBe(1)
@@ -66,7 +66,7 @@ test('using a render prop on composed component', () => {
 })
 
 test('passing a function', () => {
-  const Foo = ({ children }) => children('foo')
+  const Foo = ({ children }: any) => children('foo')
   const foo = jest.fn(({ render }) => <Foo>{render}</Foo>)
   const children = jest.fn(() => null)
   const Composed = adopt({ foo })
@@ -78,7 +78,7 @@ test('passing a function', () => {
 })
 
 test('passing a function changing the render prop on mapper', () => {
-  const Foo = ({ render }) => render('foo')
+  const Foo = ({ render }: any) => render('foo')
 
   const foo = jest.fn(({ render }) => <Foo render={render} />)
   const children = jest.fn(() => null)
@@ -91,8 +91,8 @@ test('passing a function changing the render prop on mapper', () => {
 })
 
 test('should provide a function mapper with all previous render prop results', () => {
-  const Foo = ({ children }) => children('foo')
-  const Bar = ({ children }) => children('bar')
+  const Foo = ({ children }: any) => children('foo')
+  const Bar = ({ children }: any) => children('bar')
   const bar = jest.fn(({ render }) => <Bar>{render}</Bar>)
   const children = jest.fn(() => null)
 
@@ -113,15 +113,15 @@ test('should provide a function mapper with all previous render prop results', (
 })
 
 test('should provide mapper functions with Composed component props', () => {
-  const Foo = ({ children }) => children('foo')
+  const Foo = ({ children }: any) => children('foo')
   const foo = jest.fn(({ render }) => <Foo>{render}</Foo>)
   const children = jest.fn(() => null)
 
-  type RenderProps = {
+  interface RenderProps {
     foo: string
   }
 
-  type Props = {
+  interface Props {
     bar: string
   }
 
@@ -138,14 +138,14 @@ test('should provide mapper functions with Composed component props', () => {
 test('throw with a wrong value on mapper', () => {
   expect(() => {
     const Composed = adopt({ foo: 'helo' } as any)
-    return shallow(<Composed>{props => <div>foo</div>}</Composed>)
+    return shallow(<Composed>{(props: any) => <div>foo</div>}</Composed>)
   }).toThrowError(
     'The render props object mapper just accept valid elements as value'
   )
 })
 
 test('inline composition using <Adopt> component', () => {
-  const Foo = ({ children }) => children('foo')
+  const Foo = ({ children }: any) => children('foo')
   const children = jest.fn(({ foo }) => <div>{foo}</div>)
 
   const mapper = {
@@ -189,7 +189,7 @@ test('mapping props as prop of <Adopt />', () => {
     bar: <Value initial="bar" />,
   }
 
-  const mapProps = ({ foo, bar }) => ({
+  const mapProps = ({ foo, bar }: any) => ({
     foobar: foo.value + bar.value,
   })
 

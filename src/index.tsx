@@ -109,7 +109,7 @@ export type AdoptProps<RP, P> = P & {
 }
 
 export class Adopt extends React.Component<AdoptProps<any, any>> {
-  Composed: React.ComponentType<any>
+  private Composed: React.ComponentType<any>
 
   constructor(props: any) {
     super(props)

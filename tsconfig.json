@@ -36,6 +36,6 @@
     "rootDir": "src",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/index.tsx"],
+  "include": ["src/**.tsx"],
   "exclude": ["node_modules/**"]
 }
