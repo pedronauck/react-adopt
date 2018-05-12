@@ -201,3 +201,33 @@ test('mapping props as prop of <Adopt />', () => {
 
   expect(children).toHaveBeenCalledWith({ foobar: 'foobar' })
 })
+
+test('hoisting non-static react methods from mapper values', () => {
+  interface GreeterProps {
+    name: string
+    render?: (name: string) => JSX.Element
+  }
+
+  class Greeter extends React.Component<GreeterProps> {
+    public static sayHello = (name: string): string => `Hello ${name}`
+
+    public render(): any {
+      const { render } = this.props
+      return render && typeof render === 'function' && render(`Hello John`)
+    }
+  }
+
+  const getHelloFromStatic = jest.fn((value: string) => value)
+  const children = jest.fn(() => null)
+
+  const Composed: any = adopt({
+    name: ({ render }) => render('John'),
+    greeter: Greeter,
+  })
+
+  mount(<Composed>{children}</Composed>)
+  getHelloFromStatic(Composed.sayHello('John'))
+
+  expect(getHelloFromStatic).toHaveBeenCalledWith('Hello John')
+  expect(children).toHaveBeenCalledWith({ greeter: 'Hello John', name: 'John' })
+})

@@ -1,5 +1,7 @@
 import React from 'react'
 import { ReactNode, ReactElement } from 'react'
+import hoistNonReactStatic from 'hoist-non-react-statics'
+import getDisplayName from 'react-display-name'
 
 const { values, keys, assign } = Object
 
@@ -25,14 +27,14 @@ const isFn = (val: any): boolean => Boolean(val) && typeof val === 'function'
 const isValidRenderProp = (prop: ReactNode | ChildrenFn<any>): boolean =>
   React.isValidElement(prop) || isFn(prop)
 
-export declare type RPC<RP, P = {}> = React.SFC<
+export declare type RPC<RP, P = {}> = React.ComponentType<
   P & {
     children?: ChildrenFn<RP>
     render?: ChildrenFn<RP>
   }
 >
 
-export declare type MapperComponent<RP, P> = React.SFC<
+export declare type MapperComponent<RP, P> = React.ComponentType<
   RP &
     P & {
       render?: ChildrenFn<any>
@@ -63,40 +65,53 @@ export function adopt<RP = any, P = any>(
       ? render(rest)
       : children && isFn(children) && children(rest)
 
-  const reducer = (Component: RPC<RP>, key: string, idx: number): RPC<RP> => ({
-    render: pRender,
-    children,
-    ...rest
-  }) => (
-    <Component {...rest}>
-      {props => {
-        const element = prop(key, mapper)
-        const propsWithoutRest = omit<RP>(keys(rest), props)
-        const isLast = idx === mapperKeys.length - 1
-        const render = pRender && isFn(pRender) ? pRender : children
+  Children.displayName = 'Adopt'
 
-        const renderFn: ChildrenFn<RP> = cProps => {
-          const renderProps = assign({}, propsWithoutRest, {
-            [key]: cProps,
-          })
+  const reducer = (Component: RPC<RP>, key: string, idx: number): RPC<RP> => {
+    const element = prop(key, mapper)
+    const displayName = getDisplayName(Component)
+    const nextDisplayName = getDisplayName(element)
+    const isLast = idx === mapperKeys.length - 1
 
-          const propsToPass =
-            mapProps && isFn(mapProps) && isLast
-              ? mapProps(renderProps)
-              : renderProps
+    const NewComponent: RPC<RP> = ({
+      render: pRender,
+      children,
+      ...rest
+    }: any) => (
+      <Component {...rest}>
+        {props => {
+          const propsWithoutRest = omit<RP>(keys(rest), props)
+          const render = pRender && isFn(pRender) ? pRender : children
 
-          return render && isFn(render) ? render(propsToPass) : null
-        }
+          const renderFn: ChildrenFn<RP> = cProps => {
+            const renderProps = assign({}, propsWithoutRest, {
+              [key]: cProps,
+            })
 
-        return isFn(element)
-          ? React.createElement(
-              element,
-              assign({}, rest, props, { render: renderFn })
-            )
-          : React.cloneElement(element, {}, renderFn)
-      }}
-    </Component>
-  )
+            const propsToPass =
+              mapProps && isFn(mapProps) && isLast
+                ? mapProps(renderProps)
+                : renderProps
+
+            return render && isFn(render) ? render(propsToPass) : null
+          }
+
+          return isFn(element)
+            ? React.createElement(
+                element,
+                assign({}, rest, props, { render: renderFn })
+              )
+            : React.cloneElement(element, {}, renderFn)
+        }}
+      </Component>
+    )
+
+    NewComponent.displayName = `${displayName}(${nextDisplayName})`
+
+    return isFn(element)
+      ? hoistNonReactStatic(NewComponent, element)
+      : NewComponent
+  }
 
   return mapperKeys.reduce(reducer, Children)
 }

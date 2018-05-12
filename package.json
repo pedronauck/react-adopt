@@ -34,7 +34,9 @@
     "compose"
   ],
   "dependencies": {
-    "react": "^16.3.2"
+    "hoist-non-react-statics": "^2.5.0",
+    "react": "^16.3.2",
+    "react-display-name": "^0.2.4"
   },
   "peerDependencies": {
     "react": ">= 0.14.0"
