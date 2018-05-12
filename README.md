@@ -15,6 +15,7 @@
   - [Working with new Context api](#working-with-new-context-api)
   - [Custom render and retrieving props from composed](#custom-render-and-retrieving-props-from-composed)
   - [Mapping props from mapper](#mapping-props-from-mapper)
+  - [Using components on mapper)(#using-components-on-mapper)
   - [Leading with multiple params](#leading-with-multiple-params)
   - [Typescript support](#typescript-support)
   - [Inline composition](#inline-composition)
@@ -179,6 +180,33 @@ const App = () => (
   <Adopt mapper={mapper} mapProps={mapProps}>
     {({ message }) => /* ... */}
   </Adopt>
+)
+```
+
+### Using components on mapper
+
+If you want to use your component directly as mapper value you can do that. Some nice thing here is that all non-react static methods of your components will be hoisting for composed component:
+
+```jsx
+import { React } from 'react'
+import { adopt } from 'adopt'
+import { Value } from 'react-powerplug'
+
+const Greeter = ({ render, name }) => render(`Hi ${name.value}`)
+
+Greeter.sayHi = (name) => `Hi ${name}`
+
+const Composed = adopt({
+  name: <Value name="John" />
+  greet: Greet
+})
+
+console.log(Composed.sayHi('John')) // Hi John
+
+const App = () => (
+  <Composed>
+    {({ greet, name }) => /* ... */ }
+  </Composed>
 )
 ```
 
