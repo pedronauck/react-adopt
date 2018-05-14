@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { ReactNode, ReactElement } from 'react'
-import hoistNonReactStatic from 'hoist-non-react-statics'
+import * as hoistNonReactStatic from 'hoist-non-react-statics'
 import getDisplayName from 'react-display-name'
 
 const { values, keys, assign } = Object
