@@ -232,9 +232,9 @@ const Composed = adopt({
 })
 
 const App = () => (
-  <Compose>
+  <Composed>
     {({ addTodo: { mutation, result } }) => /* ... */}
-  </Compose>
+  </Composed>
 )
 ```
 
