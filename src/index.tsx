@@ -123,12 +123,12 @@ export type AdoptProps<RP, P> = P & {
   mapProps?: MapProps<RP>
 }
 
-export class Adopt extends React.Component<AdoptProps<any, any>> {
+export class Adopt<RP = any, P = any> extends React.Component<AdoptProps<RP, P>> {
   private Composed: React.ComponentType<any>
 
   constructor(props: any) {
     super(props)
-    this.Composed = adopt(props.mapper, this.props.mapProps)
+    this.Composed = adopt<RP, P>(props.mapper, this.props.mapProps)
   }
 
   public render(): JSX.Element {
