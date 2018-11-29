@@ -198,7 +198,7 @@ Greeter.sayHi = (name) => `Hi ${name}`
 
 const Composed = adopt({
   name: <Value name="John" />
-  greet: Greet
+  greet: Greeter
 })
 
 console.log(Composed.sayHi('John')) // Hi John
