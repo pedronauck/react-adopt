@@ -44,7 +44,7 @@ React Adopt is a simple method that composes multiple render prop components, co
 Install as project dependency:
 
 ```bash
-$ yarn add react-adopt
+$ yarn add react-adopt react
 ```
 
 Now you can use React Adopt to compose your components. See below for an example using the awesome [react-powerplug](https://github.com/renatorib/react-powerplug):
